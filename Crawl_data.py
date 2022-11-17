@@ -3,12 +3,12 @@ import os
 import cfscrape
 from bs4 import BeautifulSoup
 
-#bypass cloudfare
+#bypass cloudflare
 scraper = cfscrape.create_scraper()
 
 def dumpData(data):
-    # C:/Users\Duc Phong Phung\Project_1\Crawl_Nettruyen\nettruyenin.json
-    path_json = "C:\\Users\\Duc Phong Phung\\Project_1\\Crawl_Data_Project1\\nettruyenin.json"
+    # C:\Users\Duc Phong Phung\Project_1\Crawl_Nettruyen\Crawl_Data_Project1\nettruyenin.json
+    path_json = "C:\\Users\\Duc Phong Phung\\Project_1\\Crawl_Nettruyen\\Crawl_Data_Project1\\nettruyenin.json"
     with open(path_json, 'w') as f:
         json.dump(data, f, ensure_ascii = True)
     f.close()
@@ -107,7 +107,7 @@ def GetItems(index):
 # Run Once
 def getNetTruyenData():
     index = 1
-    max_index = 200
+    max_index = 50
     all_items = []
     for index in range(1, max_index+1): 
         try:
