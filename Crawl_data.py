@@ -8,7 +8,7 @@ scraper = cfscrape.create_scraper()
 
 def dumpData(data):
     # C:/Users\Duc Phong Phung\Project_1\Crawl_Nettruyen\nettruyenin.json
-    path_json = "C:\\Users\\Duc Phong Phung\\Project_1\\Crawl_Nettruyen\\nettruyenin.json"
+    path_json = "C:\\Users\\Duc Phong Phung\\Project_1\\Crawl_Data_Project1\\nettruyenin.json"
     with open(path_json, 'w') as f:
         json.dump(data, f, ensure_ascii = True)
     f.close()
