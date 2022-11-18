@@ -38,44 +38,44 @@ def getDetailItem(address):
     return detail
 
 # download 1 episode
-def DownloadImages(address, folder): # folder name episode
-    page_soup = BeautifulSoup(scraper.get(address).content, 'html.parser')
-    image_list = page_soup.find('main', {"class": "main"}).find('div', {"class": "reading-detail box_doc"}).findAll('div', {"class": "page-chapter"})
-    images = []
-    for image in image_list:
-        item = {
-            "alt": image.find('img').attrs['alt'],
-            "data-original": image.find('img').attrs['data-original'],
-            "src": image.find('img').attrs['src'],
-            "data-index": image.find('img').attrs['data-index'],
-        }
-        images.append(item)
+# def DownloadImages(address, folder): # folder name episode
+#     page_soup = BeautifulSoup(scraper.get(address).content, 'html.parser')
+#     image_list = page_soup.find('main', {"class": "main"}).find('div', {"class": "reading-detail box_doc"}).findAll('div', {"class": "page-chapter"})
+#     images = []
+#     for image in image_list:
+#         item = {
+#             "alt": image.find('img').attrs['alt'],
+#             "data-original": image.find('img').attrs['data-original'],
+#             "src": image.find('img').attrs['src'],
+#             "data-index": image.find('img').attrs['data-index'],
+#         }
+#         images.append(item)
 
-        # download to folder:
-        if "http" in item['src'][:5]:
-            download_image(item['alt'], folder, item['src'])
-        else:
-            download_image(item['alt'], folder, "http:"+item['src'])
+#         # download to folder:
+#         if "http" in item['src'][:5]:
+#             download_image(item['alt'], folder, item['src'])
+#         else:
+#             download_image(item['alt'], folder, "http:"+item['src'])
 
-    return images
+#     return images
 
-def download_image(namefile, folder, url):
-    fixed_name = folder+"/" + "".join(x for x in namefile if (x.isalnum() or x=='.' or x == '_' or x == ' '))
-    with open(fixed_name + '.jpg', 'wb') as handle:
-        try:
-            response = scraper.get(url, headers={'referer': 'https://www.nettruyenin.com/'})
-            if not response.ok:
-                print("Warning response!")
-                print(response)
+# def download_image(namefile, folder, url):
+#     fixed_name = folder+"/" + "".join(x for x in namefile if (x.isalnum() or x=='.' or x == '_' or x == ' '))
+#     with open(fixed_name + '.jpg', 'wb') as handle:
+#         try:
+#             response = scraper.get(url, headers={'referer': 'https://www.nettruyenin.com/'})
+#             if not response.ok:
+#                 print("Warning response!")
+#                 print(response)
 
-            for block in response.iter_content(1024):
-                if not block:
-                    break
-                handle.write(block)
-            handle.close()
-        except Exception as e:
-            print("Exception: ", e)
-            handle.close()
+#             for block in response.iter_content(1024):
+#                 if not block:
+#                     break
+#                 handle.write(block)
+#             handle.close()
+#         except Exception as e:
+#             print("Exception: ", e)
+#             handle.close()
     
 
 # Run once 
