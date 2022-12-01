@@ -18,8 +18,8 @@ def writelog(logstring):
 
 
 def dumpData(data):
-    # C:\Users\Duc Phong Phung\Project_1\Crawl_Nettruyen\Crawl_Data_Project1\nettruyenon.json
-    path_json = "C:\\Users\\Duc Phong Phung\\Project_1\\Crawl_Nettruyen\\Crawl_Data_Project1\\nettruyenon.json"
+    # C:\Users\Duc Phong Phung\Project_1\Crawl_Nettruyen\Crawl_Data_Project1\nettruyentv.json
+    path_json = "C:\\Users\\Duc Phong Phung\\Project_1\\Crawl_Nettruyen\\Crawl_Data_Project1\\nettruyentv.json"
     with open(path_json, 'w') as f:
         json.dump(data, f, ensure_ascii = True)
     f.close()
@@ -72,10 +72,10 @@ def DownloadImages(address, folder): # folder name episode
 
 # download 1 image
 def download_image(namefile, folder, url):
-    fixed_name = folder+"/" + "".join(x for x in namefile if (x.isalnum() or x=='.' or x == '_' or x == ' '))
+    fixed_name = folder+"/" + "".join(word for word in namefile if (word.isalnum() or word=='.' or word == '_' or word == ' '))
     with open(fixed_name + '.jpg', 'wb') as handle:
         try:
-            response = scraper.get(url, headers={'referer': 'https://www.nettruyenon.com/'})
+            response = scraper.get(url, headers={'referer': 'https://www.nettruyentv.com/'})
             if not response.ok:
                 print("Warning response!")
                 print(response)
@@ -92,10 +92,10 @@ def download_image(namefile, folder, url):
 
 # Run once 
 def GetItems(index):
-    address_sub = "https://www.nettruyenon.com/tim-truyen-nang-cao?page={page_index}"
+    address_sub = "https://www.nettruyentv.com/tim-truyen-nang-cao?page={page_index}"
 
     if index == 1:
-        address = "https://www.nettruyenon.com/tim-truyen-nang-cao"
+        address = "https://www.nettruyentv.com/tim-truyen-nang-cao"
     else:
         address = address_sub.format(page_index=index)
 
@@ -120,7 +120,7 @@ def GetItems(index):
 def DownloadAllEpisodes(parent_folder, episodes_list):
     # make folder
     for episode in episodes_list:
-        episode_folder = parent_folder + '/' +  "".join(x for x in episode['name'] if (x.isalnum() or x=='.' or x == '_' or x == ' '))
+        episode_folder = parent_folder + '/' +  "".join(word for word in episode['name'] if (word.isalnum() or word=='.' or word == '_' or word == ' '))
         if not os.path.isdir(episode_folder):
             os.mkdir(episode_folder)
         try:
@@ -133,62 +133,66 @@ def DownloadAllEpisodes(parent_folder, episodes_list):
             writelog(episode['name'] + ":\t" + str(e))
 
 
-def DownloadEpisodeWithIndex(parent_folder, episodes_list, index): # index is index of episode in episodes_list
-    episode_folder = parent_folder + '/' +  "".join(x for x in episodes_list[index]['name'] if (x.isalnum() or x=='.' or x == '_' or x == ' '))
-    print("Scan special 1 episode: ", episode_folder)
-
-    if not os.path.isdir(episode_folder):
-        os.mkdir(episode_folder)
-    try:
-        DownloadImages(episodes_list[index]['link'], episode_folder)
-    except Exception as e:
-        print(episodes_list[index]['name'])
-        print(e)
-        print("Download Episode Error")
-        writelog(e)
-
-def DownloadComicsWithName(name): # using with has nettruyentop.json file
+def DownloadComicsWithName(name):
     
     root_path = "C:/Users/Duc Phong Phung/Project_1/Crawl_Nettruyen/Crawl_Data_Project1/Comics/"
     if not os.path.isdir(root_path):
         os.mkdir(root_path)
 
     # load file data
-    with open('./nettruyentop.json', 'r') as f:
+    with open('./nettruyentv.json', 'r') as f:
         all_items = json.load(f)
     f.close()
     
-    for item in all_items:
-        if name.lower() in item['title'].lower():
-            print(item['title'])
-            # Call download
-            parent_folder = root_path + "/" + name + "/"
-            if not os.path.isdir(parent_folder):
-                os.mkdir(parent_folder)
-            parent_folder += "".join(x for x in item['title'] if (x.isalnum() or x=='.' or x == '_' or x == ' ' or x == '-'))
-            if not os.path.isdir(parent_folder):
-                os.mkdir(parent_folder)
+    for items in all_items:
+        for item in items:
+            if name.lower() in item['title'].lower():
+                print(item['title'])
+                # Call download
+                parent_folder = root_path + "/" + "".join(x for x in item['title'] if (x.isalnum() or x=='.' or x == '_' or x == ' ' or x == '-'))
+                if not os.path.isdir(parent_folder):
+                    os.mkdir(parent_folder)
+                DownloadAllEpisodes(parent_folder, item['detail']['episodes'])
 
-            DownloadAllEpisodes(parent_folder, item['detail']['episodes'])
 
-# Call by thread
-def DownloadAllEpisodesThread(item):
-    print("Scan comic: ", item["title"])
+def DownloadNettruyenNet(): 
+    # get from Pages
+    # all_items = GetNettruyenData()
+
+    # get from JSON
+    with open('./nettruyentv.json', 'r') as f:
+        all_items = json.load(f)
+    f.close()
 
     root_path = "C:/Users/Duc Phong Phung/Project_1/Crawl_Nettruyen/Crawl_Data_Project1/Comics/"
     if not os.path.isdir(root_path):
         os.mkdir(root_path)
 
-    parent_folder = root_path + "".join(x for x in item['title'] if (x.isalnum() or x=='.' or x == '_' or x == ' '))
-    if not os.path.isdir(parent_folder):
-        os.mkdir(parent_folder)
+    # set start and end item index
+    start_index = 0
+    end_index = 20
+    # Download Image to Local server
+    for items in all_items[start_index:end_index]:
+        for item in items:
+            print("Scan comic: ", item['title'])
+            writelog("\n" + item['title'])
 
-    DownloadAllEpisodes(parent_folder, item['detail']['episodes'])
+            beginTime = datetime.now()
+
+            parent_folder = root_path + "".join(word for word in item['title'] if (word.isalnum() or word=='.' or word == '_' or word == ' '))
+            if not os.path.isdir(parent_folder):
+                os.mkdir(parent_folder)
+            # danh sach item gom list episodes (nhieu episdie) moi episode tao 1 thu muc
+            DownloadAllEpisodes(parent_folder, item['detail']['episodes'])
+
+            writelog("Done: spendTime: " + str(datetime.now() - beginTime))
+            print("SpendTime: ", datetime.now() - beginTime)
 
 # Run Once
 def getNetTruyenData():
+    numberOfComics = 0
     index = 1
-    max_index = 2
+    max_index = 5
     all_items = []
     for index in range(1, max_index+1): 
         try:
@@ -197,12 +201,18 @@ def getNetTruyenData():
             continue
         #dump
         all_items.append(result)
-    # print("So luong truyen: " , len(all_items))
+    
+    for list in all_items:
+        numberOfComics += len(list)
+    print("Số lượng truyện:", numberOfComics)
     dumpData(all_items)
 
 
 
 if __name__ == '__main__':
-    getNetTruyenData()
+    # getNetTruyenData()
+    # DownloadNettruyenNet()
+    DownloadComicsWithName("Sóc nhỏ tài năng")
+
     
     
