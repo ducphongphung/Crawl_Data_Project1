@@ -1,12 +1,17 @@
 import json
 import os
 import cfscrape
+import unidecode
 from bs4 import BeautifulSoup
 from datetime import datetime
 
 
 #bypass cloudflare
 scraper = cfscrape.create_scraper()
+
+# remove_accent
+def remove_accent(text):
+    return unidecode.unidecode(text)
 
 def writelog(logstring):
     now = datetime.now()
@@ -135,7 +140,7 @@ def DownloadAllEpisodes(parent_folder, episodes_list):
 
 def DownloadComicsWithName(name):
     
-    root_path = "C:/Users/Duc Phong Phung/Project_1/Crawl_Nettruyen/Crawl_Data_Project1/Comics/"
+    root_path = "C:/Users/Duc Phong Phung/Project_1/Crawl_Data_Project1/Comics/"
     if not os.path.isdir(root_path):
         os.mkdir(root_path)
 
@@ -146,13 +151,19 @@ def DownloadComicsWithName(name):
     
     for items in all_items:
         for item in items:
-            if name.lower() in item['title'].lower():
+            if name.lower() in item['title'].lower() or name.lower() in remove_accent(item["title"].lower()):
+                writelog('\n' + item['title'])
                 print(item['title'])
+
+                beginTime = datetime.now()
                 # Call download
                 parent_folder = root_path + "/" + "".join(x for x in item['title'] if (x.isalnum() or x=='.' or x == '_' or x == ' ' or x == '-'))
                 if not os.path.isdir(parent_folder):
                     os.mkdir(parent_folder)
                 DownloadAllEpisodes(parent_folder, item['detail']['episodes'])
+
+                writelog("Done: spendTime: " + str(datetime.now() - beginTime))
+                print("SpendTime: ", datetime.now() - beginTime)
 
 
 def DownloadNettruyenNet(): 
@@ -164,7 +175,7 @@ def DownloadNettruyenNet():
         all_items = json.load(f)
     f.close()
 
-    root_path = "C:/Users/Duc Phong Phung/Project_1/Crawl_Nettruyen/Crawl_Data_Project1/Comics/"
+    root_path = "C:/Users/Duc Phong Phung/Project_1/Crawl_Data_Project1/Comics/"
     if not os.path.isdir(root_path):
         os.mkdir(root_path)
 
@@ -212,7 +223,8 @@ def getNetTruyenData():
 if __name__ == '__main__':
     # getNetTruyenData()
     # DownloadNettruyenNet()
-    DownloadComicsWithName("Sóc nhỏ tài năng")
+    # DownloadComicsWithName("Shokuryou Jinrui Re: Starving Re:velation")
+    DownloadComicsWithName("Hoan Nguyen Quy Co")
 
     
     
