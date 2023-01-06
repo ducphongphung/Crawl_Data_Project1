@@ -23,8 +23,8 @@ def writelog(logstring):
 
 
 def dumpData(data):
-    # C:\Users\Duc Phong Phung\Project_1\Crawl_Nettruyen\Crawl_Data_Project1\nettruyentv.json
-    path_json = "C:\\Users\\Duc Phong Phung\\Project_1\\Crawl_Nettruyen\\Crawl_Data_Project1\\nettruyentv.json"
+    # C:\Users\Duc Phong Phung\Project_1\Crawl_Data_Project1\nettruyenup.json
+    path_json = "C:/Users/Duc Phong Phung/Project_1/Crawl_Data_Project1/nettruyenup.json"
     with open(path_json, 'w') as f:
         json.dump(data, f, ensure_ascii = True)
     f.close()
@@ -80,7 +80,7 @@ def download_image(namefile, folder, url):
     fixed_name = folder+"/" + "".join(word for word in namefile if (word.isalnum() or word=='.' or word == '_' or word == ' '))
     with open(fixed_name + '.jpg', 'wb') as handle:
         try:
-            response = scraper.get(url, headers={'referer': 'https://www.nettruyentv.com/'})
+            response = scraper.get(url, headers={'referer': 'https://www.nettruyenup.com/'})
             if not response.ok:
                 print("Warning response!")
                 print(response)
@@ -97,10 +97,10 @@ def download_image(namefile, folder, url):
 
 # Run once 
 def GetItems(index):
-    address_sub = "https://www.nettruyentv.com/tim-truyen-nang-cao?page={page_index}"
+    address_sub = "https://www.nettruyenup.com/tim-truyen-nang-cao?page={page_index}"
 
     if index == 1:
-        address = "https://www.nettruyentv.com/tim-truyen-nang-cao"
+        address = "https://www.nettruyenup.com/tim-truyen-nang-cao"
     else:
         address = address_sub.format(page_index=index)
 
@@ -145,7 +145,7 @@ def DownloadComicsWithName(name):
         os.mkdir(root_path)
 
     # load file data
-    with open('./nettruyentv.json', 'r') as f:
+    with open('./nettruyenup.json', 'r') as f:
         all_items = json.load(f)
     f.close()
     
@@ -171,7 +171,7 @@ def DownloadNettruyenNet():
     # all_items = GetNettruyenData()
 
     # get from JSON
-    with open('./nettruyentv.json', 'r') as f:
+    with open('./nettruyenup.json', 'r') as f:
         all_items = json.load(f)
     f.close()
 
@@ -179,11 +179,9 @@ def DownloadNettruyenNet():
     if not os.path.isdir(root_path):
         os.mkdir(root_path)
 
-    # set start and end item index
-    start_index = 0
-    end_index = 20
+   
     # Download Image to Local server
-    for items in all_items[start_index:end_index]:
+    for items in all_items:
         for item in items:
             print("Scan comic: ", item['title'])
             writelog("\n" + item['title'])
@@ -203,7 +201,7 @@ def DownloadNettruyenNet():
 def getNetTruyenData():
     numberOfComics = 0
     index = 1
-    max_index = 5
+    max_index = 1
     all_items = []
     for index in range(1, max_index+1): 
         try:
@@ -220,11 +218,12 @@ def getNetTruyenData():
 
 
 
+
 if __name__ == '__main__':
     # getNetTruyenData()
     # DownloadNettruyenNet()
-    # DownloadComicsWithName("Shokuryou Jinrui Re: Starving Re:velation")
-    DownloadComicsWithName("Hoan Nguyen Quy Co")
+    DownloadComicsWithName("C\u00e1ch \u0110\u1ec3 Em B\u1ea3o V\u1ec7 Anh")
+
 
     
     
