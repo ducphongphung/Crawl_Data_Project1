@@ -1,9 +1,9 @@
 # Crawl_Data_Project1
-**Crawl Data:** [NetTruyenIn.com](https://www.nettruyenin.com/) by **Python** and **BeautifulSoup**
+**Crawl Data:** [NetTruyen.com](https://www.nettruyenup.com/) by **Python** and **BeautifulSoup**
 
 # Ideas
 
- Sử dụng ngôn ngữ lập trình python và BeautifulSoup để Crawl Data từ website truyện tranh: [NetTruyenIn.com](https://www.nettruyenin.com/)
+ Sử dụng ngôn ngữ lập trình python và BeautifulSoup để Crawl Data từ website truyện tranh: [NetTruyen.com](https://www.nettruyenup.com/)
  
  # Kiến thức cần có:
  
