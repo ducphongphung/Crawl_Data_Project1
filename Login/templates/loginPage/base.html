@@ -10,9 +10,12 @@
     <header>
       <div class="container-fuild" style="min-height: 95%">
           <div class="row">
-            <div class="col-sm-10">
+            <div class="col-sm-1">
+              <img src="{% static 'images/Logo.jpg' %}" width="100%" height="100%" title="Logo">
+            </div>
+            <div class="col-sm-9">
               <center>
-                <p>Welcome</p>
+                <p>Account</p>
               </center>
             </div>
             <div class="col-sm-2">
@@ -27,6 +30,16 @@
     </header>
     <main>
       <section id="section1">
+        <h2>Key Token</h2>
+          {% if user.username %}
+            <p>Key_token: 8A19B93DC5FB17081A6F7A6CEB2D42C7E1AC29FC0A7857875D54BC5DA4552CB8</p>
+            <p>Visit the <a href="https://eueno.io/">Eueno</a> website and create an account to read the comics </p>
+            {% else %}
+              <p> Login to get the key token </p>
+          {% endif %}
+      </section>
+
+      <section id="section2">
         {% if user.username  %}
               <h2>Your profile</h2>
                 <p>Name: {{user.username}}</p>
@@ -35,17 +48,14 @@
               <h2>Profile</h2>
         {% endif %}
       </section>
-      <section id="section2">
-        <h2>Contact</h2>
-        <p> Name: Phung Duc Phong </p>
-        <p> Email: ducphongBKEU@gmail.com </p>
-        <p> Phone Number: 0869731830 </p>
-        
-      </section>
+
       <section id="section3">
-        <h2>Key Token</h2>
-        <p>Content for section 3 goes here.</p>
+        <h2>Contact</h2>
+          <p> Name: Phung Duc Phong </p>
+          <p> Email: ducphongBKEU@gmail.com </p>
+          <p> Phone Number: 0869731830 </p>
       </section>
+      
     </main>
     <footer>
       <p>Copyright © 2023</p>

@@ -6,16 +6,11 @@ from .forms import RegistrationForm
 # Create your views here.
 def index(request):
     return render(request, 'loginPage/base.html')
-def contact(request):
-    return render(request, 'loginPage/contact.html')
+    
 def logout_view(request):
     logout(request)
     return redirect('/')
 
-    
-
-
-    
 def register(request):
     if request.method == 'POST':
         form = RegistrationForm(request.POST)

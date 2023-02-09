@@ -124,7 +124,7 @@ STATIC_URL = 'static/'
 
 STATIC_ROOT = BASE_DIR / 'productionfiles'
 
-STATICFILES_DIRS = [
+STATICFILES_DIR = [
     BASE_DIR / 'mystaticfiles'
 ]
 
