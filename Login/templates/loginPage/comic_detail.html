@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>{{ comic.title }}</h1>
+  <img src="{{ comic.image_url }}" alt="{{ comic.title }}">
+  <p><strong>Author:</strong> {{  comic.author }}</p>
+  <p><strong>Description:</strong> {{ comic.description }}</p>
+{% endblock %}
