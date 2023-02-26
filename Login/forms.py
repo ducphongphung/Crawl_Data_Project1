@@ -10,3 +10,5 @@ class RegistrationForm(forms.ModelForm):
         model = User
         fields = ['username', 'email']
 
+
+

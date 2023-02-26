@@ -4,6 +4,7 @@ import cfscrape
 import unidecode
 from bs4 import BeautifulSoup
 from datetime import datetime
+import time 
 
 
 #bypass cloudflare
@@ -23,8 +24,8 @@ def writelog(logstring):
 
 
 def dumpData(data):
-    # C:\Users\Duc Phong Phung\Project_1\Crawl_Data_Project1\nettruyenup.json
-    path_json = "C:/Users/Duc Phong Phung/Project_1/Crawl_Data_Project1/nettruyenup.json"
+    # C:\Users\Duc Phong Phung\git\Crawl_Data_Project1\nettruyenup.json
+    path_json = "C:/Users/Duc Phong Phung/git/Crawl_Data_Project1/nettruyenup.json"
     with open(path_json, 'w') as f:
         json.dump(data, f, ensure_ascii = True)
     f.close()
@@ -41,7 +42,7 @@ def getDetailItem(address):
         "status": page.find('main', {"class": "main"}).find('li', {"class": "status row"}).findAll('p')[1].getText(),
         "genres": [x.text for x in page.find('main', {"class": "main"}).find('li', {"class": "kind row"}).findAll('a')],
         }
-    episode_list = page.find('main', {"class": "main"}).find('div', {"class": "list-chapter"}).findAll('li')[1:]
+    episode_list = page.find('main', {"class": "main"}).find('div', {"class": "list-chapter"}).findAll('li')[-5:]
     episode_links = []
     for episode in episode_list:
         episode_links.append({
@@ -220,9 +221,11 @@ def getNetTruyenData():
 
 
 if __name__ == '__main__':
-    # getNetTruyenData()
-    # DownloadNettruyenNet()
-    DownloadComicsWithName("C\u00e1ch \u0110\u1ec3 Em B\u1ea3o V\u1ec7 Anh")
+    # while True:
+        getNetTruyenData()
+        # DownloadNettruyenNet()
+        # DownloadComicsWithName("")
+        # time.sleep(24*60*60)
 
 
     
