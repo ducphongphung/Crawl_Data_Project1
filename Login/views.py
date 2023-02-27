@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import login, logout
+from django.urls import reverse_lazy
 from .forms import RegistrationForm
 import json
 

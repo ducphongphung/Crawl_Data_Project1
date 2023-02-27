@@ -1,45 +1,54 @@
 {% extends 'loginPage/base_detail.html' %}
 
 {% block content %}
-  
-<section class="px-[10px] mt-[20px] s1024:flex gap-[10px]">
-  <div class="grow">
+<div class="content-detail">
+  <section class="px-[10px] mt-[20px] s1024:flex gap-[10px]">
+    <div class="grow">
       <div class="s480:flex gap-[10px]">
-          
-        <div class="relative s480:block hidden">
-          <img class="w-[200px] rounded-xl" src="data:image/png;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src="{{comic.image_url}}" data-id="100615" alt="Kinka 1-mai de Kawaru Boukensha Seikatsu">
+        <div class="relative s480:block">
+          <img class="w-[200px] rounded-xl img-comic" src="data:image/png;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src="{{comic.image_url}}" data-id="100615" alt="imgsss">
+        </div>
+      <div>
+        <h1 class="uppercase text-[30px] font-medium">{{comic.title}}</h1>
+        <div class="mt-3 mb-3">
+          <a class="rounded-xl px-3 py-1 bg-red-700 text-white text-[18px] font-light" href="Eueno.io">Đọc truyện</a>
+        </div>
+        <div class="mb-2 text-[20px]">
+          <label class="w-[100px] inline-block">Tác giả:</label>
+          <span>{{comic.author}}</span>
+        </div>
+        <div class="mb-2 text-[20px]">
+          <label class="w-[100px] inline-block">Tình trạng:</label>
+          <span>{{comic.status}}</span>
+        </div>
+        {% if user.username %}
+        <div class="mb-2 text-[20px]">
+          <label class="w-[100px] inline-block">Key:</label>
+          <span>{{comic.key}}</span>
+        </div>
+        {% endif %}
       </div>
-          </div>
-  <div>
-    <h1 class="uppercase text-[20px] font-medium">{{comic.title}}</h1>
-    <div class="mt-3 mb-3">
-      <a class="rounded-xl px-3 py-1 bg-purple-700 text-white text-[14px] font-light" href="Eueno.io">Đọc truyện</a>
     </div>
-    <div class="mb-2 text-[14px]">
-      <label class="w-[100px] inline-block">Tác giả</label>
-      <span>{{comic.author}}</span>
-    </div>
-    <div class="mb-2 text-[14px]">
-      <label class="w-[100px] inline-block">Tình trạng</label>
-      <span>{{comic.status}}</span>
-          </div>
-    {% if user.username %}
-    <div class="mb-2 text-[14px]">
-      <label class="w-[100px] inline-block">Key</label>
-      <span>{{comic.key}}</span>
-      </div>
-      {% endif %}
-  </div>
-      </div>
-
-    <div class="mt-[20px] s768:mt-[30px] uppercase text-orange-600">Nội dung</div>
-    <div class="mt-[10px] text-[15px] font-light">
+  
+    <div class="mt-[40px] s768:mt-[30px] uppercase text-orange-600 text-[25px]">Nội dung</div>
+    <div class="mt-[20px] text-[20px] font-bold">
       {{comic.description}}
-    </div>	
+    </div>
     <div class="mt-[10px] text-[15px] font-light">
-      <a class="bg-violet-200 dark:bg-slate-700 rounded-lg px-2 py-1">Hello </a>
-  </div>
+    </div>
   
   </section>
-</section>
+  </section>
+</div>
+
+<style>
+  .container {
+    background-image: linear-gradient(to top right,
+        #FCD59C,#FF9F10);
+        height: 900px;
+  }
+  .img-comic {
+    width: 300px;
+  }
+</style>
 {% endblock %}

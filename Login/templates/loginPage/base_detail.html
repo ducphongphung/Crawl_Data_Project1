@@ -14,30 +14,38 @@
 	
 	<link href="{% static 'css/font.css' %}" rel="stylesheet">
     <script type='text/javascript' src='https://platform-api.sharethis.com/js/sharethis.js#property=5fa9fc956a73380012578d70&product=sop' async='async'></script>
-</head>
-<body class="dark:bg-slate-800 dark:text-teal-600 pt-[50px]">
-
-	<nav class="navbar fixed shadow dark:shadow-slate-700 bg-white dark:bg-slate-800 dark:shadow-slate-700 top-0 left-0 right-0 z-50">
-	    <div class="container px-[10px] py-[5px] flex justify-end s768:justify-between gap-2" style="overflow: unset;">
-		    <div class="navbar-left fixed overflow-hidden h-[50px] shadow shadow-none s768:relative w-[220px] s375:w-[240px] s768:w-auto s768:h-auto s768:flex s768:gap-[20px] s1024:gap-[40px] top-0 left-0 bg-white dark:bg-slate-800 dark:shadow-slate-700 s768:shadow-none s768:grow s768:overflow-visible pl-[10px] pr-0 py-[5px] s768:p-0">
-			    <div class="flex gap-2 justify-between">
-				    <a class="logo h-[40px] overflow-hidden block pt-[2px]" href="/">
-					    <span class="bg-clip-text text-transparent bg-gradient-to-r from-red-500 to-violet-500 dark:from-red-500 dark:to-teal-600 text-[22px]">
-				            PComics
-				  	    </span>
-				    </a>
-				    <div class="navbar-toggle h-[40px] p-[10px] s768:hidden">
-					    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-					        <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-                        </svg>
-				    </div>
-		        </div>
-	        </div>
-			
-        </div>
-    </nav>
 	
-<div id="container" class="container" data-id="100615" data-name="" data-slug="kinka-1-mai-de-kawaru-boukensha-seikatsu" data-total="24">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/list.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+</head>
+<body class="font-sans">
+	<header>
+		<nav class="navbar">
+		
+			<div class="navbar-container">
+				<div class="navbar-header">
+					<div class="navbar-brand tet">
+						<a class="logo" href="/">
+							<img src="{% static 'images/Logo.png' %}" width="100%" height="100%" alt="Comics">
+						</a>
+					</div>
+					
+					<div class="navbar-header-user">
+						{% if user.username  %}
+							 <p> Welcome {{user.username}}|<a href="{% url 'logout' %}">Sign Out</a></p>
+						{% else %}
+							 <p><a href="{% url 'register' %}">Sign Up</a>|<a href="{% url 'login' %}">Sign In</a></p>
+						{% endif %}
+					 </div> 
+	
+				<div class="navbar-center">
+				</div>
+				 
+			</div>
+		</nav>
+	</header>
+	
+<div class="container">
     {% block content %}
 	
     {% endblock %}
