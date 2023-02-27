@@ -26,6 +26,7 @@
 		<meta name="msvalidate.01" content="C21FDE84CE65ABA807746F89A0D2964C" />
 	
         <link rel="stylesheet" type="text/css" href="{% static 'css/list.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
 
     </head>
 <body class="font-sans">
@@ -37,7 +38,7 @@
 			<div class="navbar-header">
 				<div class="navbar-brand tet">
 					<a class="logo" href="/">
-						<img src="{% static 'images/Logo.jpg' %}" width="100%" height="100%" alt="Comics">
+						<img src="{% static 'images/Logo.png' %}" width="100%" height="100%" alt="Comics">
 					</a>
 				</div>
 				
@@ -45,28 +46,13 @@
                     {% if user.username  %}
                          <p> Welcome {{user.username}}|<a href="{% url 'logout' %}">Sign Out</a></p>
                     {% else %}
-                         <p><a href="register/">Register</a>|<a href="login/">Sign In</a></p>
+                         <p><a href="register/">Sign Up</a>|<a href="login/">Sign In</a></p>
                     {% endif %}
                  </div> 
 
             <div class="navbar-center">
-                <a class="logo" href="/">
-                    PComics
-                </a>
             </div>
-			<div class="navbar-left" id="navbar-left">
-				<div class="navbar-search">
-					<div class="search-box">
-						<input class="shadow-none ring-0 focus:shadow-none active:shadow-none focus:ring-0 active:ring-0" type="text" name="search-box" placeholder="Tìm kiếm anime" autocomplete="off">
-						<i class="icon icon-search"></i>
-					</div>
-					<div class="search-result" id="search-result">
-						<div class="result-body"></div>
-						<div class="result-noitem hidden"></div>
-						<div class="loading hidden"></div>
-					</div>
-				</div>
-        </div>  
+			 
         </div>
     </nav>
 </header>
@@ -81,14 +67,18 @@
     <script async type="text/javascript" src="//ss.yomedia.vn/js/yomedia-sdk.js?v=3" id="s-4508cf5bcbb94b9eb347bc4dcf8f7ff7"></script>       
     </div>
     <section class="mt-[30px] pl-[10px] pr-[10px] s1024:p-0 clear-both">
+        <ul class="listPage">
+
+        </ul>
         <div class="">
-          <h1 class="text-[25px] text-red-700 uppercase">Truyện Mới Nhất</h1>
+          <h1 class="text-[25px] text-red-700 uppercase">List Comics</h1>
         </div>
         
-        <div class="relative grid grid-cols-2 s640:grid-cols-4 s768:grid-cols-6 gap-4">
+        <div class="relative grid grid-cols-2 s640:grid-cols-4 s768:grid-cols-6 gap-4 phongsieudeptrai" id="main-page">
+            
             {% for comic in comics %}
-                <div class="group/manga relative overflow-hidden rounded-[10px] bg-pink-800">
-                <a href="/{{ comic.title}}" target="_blank">
+                <div class="group/manga relative overflow-hidden rounded-[10px] bg-pink-800 Pcomics">
+                <a href="{{comic.id}}" target="_blank">
                 <img class="w-full h-full" src="data:image/png;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src="{{ comic.image_url }}">
                 <div class="absolute bottom-0 grid content-end w-full h-[90px] s1024:h-[150px] line-height-[25px] text-white bg-gradient-to-b from-transparent to-black s1024:group-hover/manga:to-pink-800 p-2 s480:p-4 s768:p-2 s1024:p-4 transition-all">
                     <div class="line-clamp-3 s1024:text-[16px]">{{ comic.title }}</div>
@@ -99,9 +89,8 @@
                         
         </div>
 
-        <input type="hidden" name="total-item" value="698">
-        <input type="hidden" name="current-page" value="1">
-        <div class="pagination"></div>
+        
+
     </section>
 </div>
     <div class="notification-fixed"></div>
@@ -121,6 +110,7 @@
                 </script>
                 <script type="text/javascript" src="//ss.yomedia.vn/js/yomedia-sdk.js?v=3" id="s-ddcc370bbe6643298ebaa569b245d513"></script>
 			</div>
+            <script type="text/javascript" src="{% static 'js/blist2.js' %}"></script>
 																			    	
 </body>
 </html>

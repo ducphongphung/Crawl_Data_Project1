@@ -5,6 +5,7 @@ import unidecode
 from bs4 import BeautifulSoup
 from datetime import datetime
 import time 
+import random
 
 
 #bypass cloudflare
@@ -31,11 +32,14 @@ def dumpData(data):
     f.close()
 
 # get all information of item
+
 def getDetailItem(address):
     print("Address: ", address)
     page = BeautifulSoup(scraper.get(address).content, 'html.parser')
 
     detail = {
+        "id": random.sample(range(10000000000000000),1),
+        "key": ''.join(random.choices('abcdefghijklmnopqrstuvwxyz0123456789', k=43)),
         "title": page.find('h1', {"class": "title-detail"}).getText(),
         "image": page.find('main', {"class": "main"}).find('div', {"class": "col-image"}).find('img').attrs['src'],
         "author": page.find('main', {"class": "main"}).find('li', {"class": "author row"}).findAll('p')[1].getText(),
@@ -109,7 +113,7 @@ def GetItems(index):
     page = BeautifulSoup(scraper.get(address).content, 'html.parser')
     items_content = page.find('div', {"class": "items"}).findAll('div', {"class": "item"})
     for item in items_content:
-        item_info = {
+        item_info = { 
             "title": item.find('div', {"class": "title"}).text.strip(),
             "link": item.find('div', {"class": "image"}).find('a').attrs['href'],
             "image": item.find('div', {"class": "image"}).find('img').attrs['data-original'],
@@ -176,7 +180,7 @@ def DownloadNettruyenNet():
         all_items = json.load(f)
     f.close()
 
-    root_path = "C:/Users/Duc Phong Phung/Project_1/Crawl_Data_Project1/Comics/"
+    root_path = "C:/Users/Duc Phong Phung/git/Crawl_Data_Project1/Comics/"
     if not os.path.isdir(root_path):
         os.mkdir(root_path)
 
@@ -202,7 +206,7 @@ def DownloadNettruyenNet():
 def getNetTruyenData():
     numberOfComics = 0
     index = 1
-    max_index = 1
+    max_index = 3
     all_items = []
     for index in range(1, max_index+1): 
         try:
@@ -222,8 +226,8 @@ def getNetTruyenData():
 
 if __name__ == '__main__':
     # while True:
-        getNetTruyenData()
-        # DownloadNettruyenNet()
+        # getNetTruyenData()
+        DownloadNettruyenNet()
         # DownloadComicsWithName("")
         # time.sleep(24*60*60)
 

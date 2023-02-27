@@ -4,10 +4,8 @@ from django.contrib.auth import login, logout
 from .forms import RegistrationForm
 import json
 
-
-# Create your views here.
-def index(request):
-    with open("./nettruyenup.json", "r") as f:
+# comic_data
+with open("./nettruyenup.json", "r") as f:
         all_comics = json.load(f)
 
         data = []
@@ -15,28 +13,30 @@ def index(request):
         for comics in all_comics:
             for comic in comics:
                 comic_data = {
+                    "id": comic['detail']['id'][0],
+                    "key": comic['detail']['key'],
                     "title": comic['title'],
                     "author": comic['detail']['author'],
                     "image_url": comic['image'],
+                    "status":comic['detail']['status'],
                     "description": comic['description'],
                 }
                 data.append(comic_data)    
+    
+
+# Create your views here.
+def index(request):
     context = {
         "comics": data,
     }
 
     return render(request, 'loginPage/base.html',context)
 
-def comic_detail(request, title):
-    with open("./nettruyenup.json", "r") as f:
-        all_comics = json.load(f)
-        comic = next(filter(lambda c: c['title'] == title, all_comics), None)
-
-    if comic is None:
-        # handle 404 error
-        pass
-
-    return render(request, 'comic_detail.html', {'comic': comic})
+def comic_detail(request, comic_id):
+    for comic in data:
+        if comic['id'] == comic_id:
+            context = {'comic': comic}
+            return render(request, 'loginPage/comic_detail.html', context)
 
 
 

@@ -1,0 +1,32 @@
+.navbar {
+    position: sticky;
+}
+.navbar-header-user p {
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size : 18px;
+    color: #FF9F10;
+}
+
+.phongsieudeptrai {
+    background-color: #FF9F10;    
+    padding: 20px #FF9F10 ;
+}
+
+.listPage{
+    padding:10px;
+    text-align: center;
+    list-style: none;
+}
+.listPage li{
+    background-color: #ccc;
+    padding:20px;
+    display: inline-block;
+    margin:0 10px;
+    cursor: pointer;
+    align-items: center;
+    border-radius: 20px;
+}
+.listPage .active{
+    background-color: #FF9F10;
+    color: red;
+}
